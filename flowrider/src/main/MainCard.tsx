@@ -1,16 +1,18 @@
 import React, { useRef, useState } from 'react';
+import './MainCard.css';
 
 export type VariantType = 'variantA' | 'variantB' | 'variantC';
 
 interface MainCardProps {
   inputValue: string;
   onInputChange: (val: string) => void;
-  activeVariant: VariantType;
+  activeVariant: VariantType | null;
   onSelectVariant: (variant: VariantType) => void;
   onSubmit?: () => void;
   onAudioReady?: (blob: Blob) => void;
-  isSubmitting?: boolean;
-  isBusy?: boolean;
+  disabled?: boolean;
+  isGenerating?: boolean;
+  isTranscribing?: boolean;
   replyText?: string;
   errorText?: string;
 }
@@ -22,14 +24,17 @@ export const MainCard: React.FC<MainCardProps> = ({
   onSelectVariant,
   onSubmit,
   onAudioReady,
-  isSubmitting,
-  isBusy,
+  disabled = false,
+  isGenerating,
+  isTranscribing,
   replyText,
   errorText,
 }) => {
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
+
+  const busy = Boolean(isGenerating || isTranscribing);
 
   const handleMicClick = async () => {
     if (isRecording) {
@@ -61,74 +66,77 @@ export const MainCard: React.FC<MainCardProps> = ({
     }
   };
 
-  const disabled = isSubmitting || isBusy;
-
   return (
     <div className="card">
-      <header className="card-header">
-        <h2 className="card-title">Configuration Panel</h2>
-        <p className="card-subtitle">
-          Select a view mode and adjust your live input below.
-        </p>
-      </header>
+      <div className="card-inner">
+        <header className="card-header">
+          <h2 className="card-title">How can I help you?</h2>
+          <p className="card-subtitle">
+            From question to answer in one seamless current.
+          </p>
+        </header>
 
-      <div className="card-body">
-        <label htmlFor="card-input" className="input-label">
-          Shared Input Value
-        </label>
-        <div className="input-row">
-          <input
-            id="card-input"
-            type="text"
-            className="text-input"
-            placeholder="Type something here..."
-            value={inputValue}
-            disabled={disabled}
-            onChange={(e) => onInputChange(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') onSubmit?.();
-            }}
-          />
-          <button
-            type="button"
-            className={`btn-mic ${isRecording ? 'recording' : ''}`}
-            onClick={handleMicClick}
-            disabled={isSubmitting}
-            aria-label={isRecording ? 'Detener grabación' : 'Grabar con micrófono'}
-            title={isRecording ? 'Detener grabación' : 'Grabar con micrófono'}
-          >
-            {isRecording ? '⏹' : '🎤'}
-          </button>
+        <div className="card-body">
+          <label htmlFor="card-input" className="input-label">
+            Shared Input Value
+          </label>
+          <div className="input-row">
+            <input
+              id="card-input"
+              type="text"
+              className="text-input"
+              placeholder="Type something here..."
+              value={inputValue}
+              disabled={busy}
+              onChange={(e) => onInputChange(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') onSubmit?.();
+              }}
+            />
+            <button
+              type="button"
+              className={`btn-mic ${isRecording ? 'recording' : ''}`}
+              onClick={handleMicClick}
+              disabled={busy}
+              aria-label={isRecording ? 'Detener grabación' : 'Grabar con micrófono'}
+              title={isRecording ? 'Detener grabación' : 'Grabar con micrófono'}
+            >
+              {isRecording ? '⏹' : '🎤'}
+            </button>
+          </div>
+
+          {isTranscribing && <p className="assistant-status">Transcribiendo audio…</p>}
+          {isGenerating && !isTranscribing && <p className="assistant-status">Generando respuesta…</p>}
+          {!busy && errorText && <p className="assistant-error">{errorText}</p>}
+          {!busy && !errorText && replyText && <p className="assistant-reply">{replyText}</p>}
         </div>
 
-        {isBusy && <p className="assistant-status">Transcribiendo audio…</p>}
-        {isSubmitting && !isBusy && <p className="assistant-status">Generando respuesta…</p>}
-        {!isSubmitting && !isBusy && errorText && <p className="assistant-error">{errorText}</p>}
-        {!isSubmitting && !isBusy && !errorText && replyText && <p className="assistant-reply">{replyText}</p>}
-      </div>
-
-      <div className="card-actions">
-        <button
-          type="button"
-          className={`btn btn-primary ${activeVariant === 'variantA' ? 'selected' : ''}`}
-          onClick={() => onSelectVariant('variantA')}
-        >
-          Summary View
-        </button>
-        <button
-          type="button"
-          className={`btn btn-secondary ${activeVariant === 'variantB' ? 'selected' : ''}`}
-          onClick={() => onSelectVariant('variantB')}
-        >
-          Analytics View
-        </button>
-        <button
-          type="button"
-          className={`btn btn-outline ${activeVariant === 'variantC' ? 'selected' : ''}`}
-          onClick={() => onSelectVariant('variantC')}
-        >
-          Settings View
-        </button>
+        <div className="card-actions">
+          <button
+            type="button"
+            disabled={disabled}
+            className={`btn ${activeVariant === 'variantA' ? 'selected' : ''}`}
+            onClick={() => onSelectVariant('variantA')}
+          >
+            Summary View
+          </button>
+          <button
+            type="button"
+            disabled={disabled}
+            className={`btn ${activeVariant === 'variantB' ? 'selected' : ''}`}
+            onClick={() => onSelectVariant('variantB')}
+          >
+            Analytics View
+          </button>
+          <button
+            type="button"
+            disabled={disabled}
+            className={`btn ${activeVariant === 'variantC' ? 'selected' : ''}`}
+            onClick={() => onSelectVariant('variantC')}
+          >
+            Settings View
+          </button>
+        </div>
       </div>
     </div>
   );

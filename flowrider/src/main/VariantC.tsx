@@ -1,11 +1,13 @@
 import React from 'react';
 import { Titulo } from '../components/Titulo';
 import { Carrusel } from '../components/Carrusel';
+import './Variant.css';
 import type { ComponentSpec } from './layoutTypes';
 import { str } from './propUtils';
 
 interface VariantProps {
   components: ComponentSpec[];
+  stageClass?: string;
 }
 
 const DEFAULT_ITEMS = [
@@ -16,7 +18,7 @@ const DEFAULT_ITEMS = [
   { title: 'Elemento 5', description: 'Curabitur euismod neque molestie, gravida metus nec luctus dolor.' },
 ];
 
-export const VariantC: React.FC<VariantProps> = ({ components }) => {
+export const VariantC: React.FC<VariantProps> = ({ components, stageClass = '' }) => {
   const titulos = components.filter((c) => c.type === 'Titulo');
   const carrusel = components.find((c) => c.type === 'Carrusel');
 
@@ -25,11 +27,13 @@ export const VariantC: React.FC<VariantProps> = ({ components }) => {
     : DEFAULT_ITEMS;
 
   return (
-    <div className="h-full overflow-y-auto flex flex-col items-center gap-6 p-2 text-center">
-      <Titulo heading={str(titulos[0]?.props.heading, 'Este es el título')} as="h1" size="text-3xl sm:text-4xl" />
-      <Titulo heading={str(titulos[1]?.props.heading, 'Este es el subtítulo')} as="h2" size="text-2xl" />
+    <div className={`variant-panel variant-panel-center gap-6 ${stageClass}`}>
+      <div className="variant-anim-content flex flex-col items-center gap-6 w-full">
+        <Titulo heading={str(titulos[0]?.props.heading, 'Este es el título')} as="h1" size="text-3xl sm:text-4xl" />
+        <Titulo heading={str(titulos[1]?.props.heading, 'Este es el subtítulo')} as="h2" size="text-2xl" />
 
-      <Carrusel items={items} cardWidth="w-72 sm:w-80 aspect-[3/4]" gap="gap-6" />
+        <Carrusel items={items} cardWidth="w-72 sm:w-80 aspect-[3/4]" gap="gap-6" />
+      </div>
     </div>
   );
 };

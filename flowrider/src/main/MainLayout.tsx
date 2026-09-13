@@ -1,10 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './MainLayout.css';
 import MainCard, { type VariantType } from './MainCard';
+import VariantDefault from './VariantDefault';
 import VariantA from './VariantA';
 import VariantB from './VariantB';
 import VariantC from './VariantC';
 import type { ComponentSpec } from './layoutTypes';
+
+type DisplayVariant = VariantType | 'default';
 
 const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8787';
 
@@ -16,13 +19,53 @@ const LAYOUT_TO_VARIANT: Record<string, VariantType> = {
 
 export const MainLayout: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
-  const [activeVariant, setActiveVariant] = useState<VariantType>('variantA');
+  const [activeVariant, setActiveVariant] = useState<VariantType | null>(null);
+  const [renderedVariant, setRenderedVariant] = useState<DisplayVariant>('default');
+  const [stageClass, setStageClass] = useState<string>('');
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
   const [isGenerating, setIsGenerating] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const [components, setComponents] = useState<ComponentSpec[]>([]);
   const [replyText, setReplyText] = useState('');
   const [errorText, setErrorText] = useState('');
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const transitionToVariant = (newVariant: VariantType) => {
+    if (newVariant === activeVariant || isTransitioning) return;
+
+    setIsTransitioning(true);
+    setActiveVariant(newVariant);
+
+    // 1. Fade out current view (400ms)
+    setStageClass('stage-exit');
+
+    timerRef.current = setTimeout(() => {
+      // 2. Mount new component completely invisible (prevents flashing)
+      setRenderedVariant(newVariant);
+      setStageClass('stage-prepare');
+
+      // 3. Trigger simultaneous fade-in on next repaint cycle
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setStageClass('stage-enter');
+
+          // 4. Reset to idle once fade-in finishes (450ms)
+          timerRef.current = setTimeout(() => {
+            setStageClass('');
+            setIsTransitioning(false);
+          }, 450);
+        });
+      });
+    }, 400);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const playReply = async (text: string) => {
     try {
@@ -58,8 +101,8 @@ export const MainLayout: React.FC = () => {
       const data: { layout: string; components: ComponentSpec[]; reply: string } = await res.json();
       const variant = LAYOUT_TO_VARIANT[data.layout];
       if (variant) {
-        setActiveVariant(variant);
         setComponents(data.components ?? []);
+        transitionToVariant(variant);
       }
       setReplyText(data.reply ?? '');
       if (data.reply) void playReply(data.reply);
@@ -92,15 +135,15 @@ export const MainLayout: React.FC = () => {
   };
 
   const renderActiveVariant = () => {
-    switch (activeVariant) {
+    switch (renderedVariant) {
       case 'variantA':
-        return <VariantA components={components} />;
+        return <VariantA components={components} stageClass={stageClass} />;
       case 'variantB':
-        return <VariantB components={components} />;
+        return <VariantB components={components} stageClass={stageClass} />;
       case 'variantC':
-        return <VariantC components={components} />;
+        return <VariantC components={components} stageClass={stageClass} />;
       default:
-        return null;
+        return <VariantDefault stageClass={stageClass} />;
     }
   };
 
@@ -111,11 +154,12 @@ export const MainLayout: React.FC = () => {
           inputValue={inputValue}
           onInputChange={setInputValue}
           activeVariant={activeVariant}
-          onSelectVariant={setActiveVariant}
+          onSelectVariant={transitionToVariant}
           onSubmit={() => handleGenerate()}
           onAudioReady={handleAudioReady}
-          isSubmitting={isGenerating}
-          isBusy={isTranscribing}
+          disabled={isTransitioning}
+          isGenerating={isGenerating}
+          isTranscribing={isTranscribing}
           replyText={replyText}
           errorText={errorText}
         />
