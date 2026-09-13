@@ -1,0 +1,66 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.navbar-logo a {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #4b5563;
+  border-radius: 6px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+/* Hover state */
+.nav-link:hover {
+  color: #1d4ed8;
+  background-color: #eff6ff;
+}
+
+/* Active / Selected state */
+.nav-link.active {
+  color: #ffffff;
+  background-color: #2563eb;
+}
+
+/* Active item hover */
+.nav-link.active:hover {
+  background-color: #1d4ed8;
+  color: #ffffff;
+}
+
+/* Balances layout so links remain centered */
+.navbar-spacer {
+  width: 100px;
+  visibility: hidden;
+}
+
+@media (max-width: 640px) {
+  .navbar-spacer {
+    display: none;
+  }
+}

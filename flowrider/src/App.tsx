@@ -14,15 +14,17 @@ import { ListaSimple } from './components/ListaSimple';
 
 import { Navbar } from './main/Navbar';
 import { Footer } from './main/Footer';
-import { MainCard } from './main/MainCard';
+import { MainLayout } from './main/MainLayout';
 
 export default function App() {
 
   return (
-    <Navbar />
-    <main>
-      <MainCard />
-    </main>
-    <Footer />
+    <div>
+      <Navbar />
+      <main>
+        <MainLayout />
+      </main>
+      <Footer />
+    </div>
   );
 }
