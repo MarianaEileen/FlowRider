@@ -7,6 +7,8 @@ interface MainCardProps {
   onInputChange: (val: string) => void;
   activeVariant: VariantType;
   onSelectVariant: (variant: VariantType) => void;
+  onSubmit?: () => void;
+  isSubmitting?: boolean;
 }
 
 export const MainCard: React.FC<MainCardProps> = ({
@@ -14,6 +16,8 @@ export const MainCard: React.FC<MainCardProps> = ({
   onInputChange,
   activeVariant,
   onSelectVariant,
+  onSubmit,
+  isSubmitting,
 }) => {
   return (
     <div className="card">
@@ -34,7 +38,11 @@ export const MainCard: React.FC<MainCardProps> = ({
           className="text-input"
           placeholder="Type something here..."
           value={inputValue}
+          disabled={isSubmitting}
           onChange={(e) => onInputChange(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') onSubmit?.();
+          }}
         />
       </div>
 

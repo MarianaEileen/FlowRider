@@ -7,7 +7,8 @@ const app = express();
 const port = Number(process.env.PORT ?? 8787);
 const frontendOrigin = process.env.FRONTEND_ORIGIN ?? 'http://localhost:5173';
 
-app.use(cors({ origin: frontendOrigin }));
+// Vite picks the next free port when 5173 is taken, so allow any localhost port in dev.
+app.use(cors({ origin: [frontendOrigin, /^http:\/\/localhost:\d+$/] }));
 app.use(express.json());
 
 app.get('/api/health', (_req, res) => {

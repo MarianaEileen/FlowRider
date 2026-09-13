@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface ChartData {
  value: number;
  display: string;

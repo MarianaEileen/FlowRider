@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface TituloProps {
  eyebrow?: string;
  heading: string;

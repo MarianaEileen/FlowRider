@@ -43,7 +43,7 @@ export function Carrusel({ items, cardWidth = 'w-52', gap = 'gap-4' }: CarruselP
     {items.map((item, i) => (
      <article
       key={i}
-      ref={(el) => (cardRefs.current[i] = el)}
+      ref={(el) => { cardRefs.current[i] = el; }}
       className={`flex-none snap-start bg-white border border-gray-200 rounded-xl p-5 shadow-sm ${cardWidth}`}
      >
       <h3 className="text-lg font-bold text-gray-800 mb-2">{item.title}</h3>
