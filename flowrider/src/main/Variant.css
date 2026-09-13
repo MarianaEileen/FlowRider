@@ -1,4 +1,7 @@
-/* Base glass panel matching MainCard exactly */
+/* =========================================================
+   Base Surfaces
+   ========================================================= */
+
 .variant-panel {
   height: 100%;
   display: flex;
@@ -12,15 +15,18 @@
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
   overflow-y: auto;
+
+  /* Force hardware acceleration */
+  will-change: opacity, transform;
+  transform: translateZ(0);
 }
 
-/* Centered layout variant for VariantB and VariantC */
 .variant-panel-center {
   align-items: center;
   text-align: center;
 }
 
-/* Default view: transparent with white text */
+/* Default transparent variant */
 .variant-panel-default {
   background-color: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(4px);
@@ -43,10 +49,56 @@
   margin: 0;
 }
 
-/* Data caption at the bottom of variants */
 .variant-caption {
   font-size: 0.75rem;
   color: #6b7280;
   margin-top: auto;
   padding-top: 1rem;
+}
+
+.variant-anim-content {
+  width: 100%;
+}
+
+/* =========================================================
+   Synchronized Fast Transitions (No-Flash)
+   ========================================================= */
+
+/* Prevent flashing: hidden immediately upon mount before enter starts */
+.stage-prepare {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* Simultaneous Exit: items and background fade together */
+.stage-exit {
+  animation: unifiedFadeOut 0.4s cubic-bezier(0.4, 0, 1, 1) forwards;
+  pointer-events: none;
+}
+
+/* Simultaneous Enter: items and background fade in together */
+.stage-enter {
+  animation: unifiedFadeIn 0.45s cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+@keyframes unifiedFadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98) translateY(-8px);
+  }
+}
+
+@keyframes unifiedFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }

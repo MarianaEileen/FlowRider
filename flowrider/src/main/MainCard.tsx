@@ -8,6 +8,7 @@ interface MainCardProps {
   onInputChange: (val: string) => void;
   activeVariant: VariantType | null;
   onSelectVariant: (variant: VariantType) => void;
+  disabled?: boolean;
 }
 
 export const MainCard: React.FC<MainCardProps> = ({
@@ -15,6 +16,7 @@ export const MainCard: React.FC<MainCardProps> = ({
   onInputChange,
   activeVariant,
   onSelectVariant,
+  disabled = false,
 }) => {
   return (
     <div className="card">
@@ -43,6 +45,7 @@ export const MainCard: React.FC<MainCardProps> = ({
         <div className="card-actions">
           <button
             type="button"
+            disabled={disabled}
             className={`btn ${activeVariant === 'variantA' ? 'selected' : ''}`}
             onClick={() => onSelectVariant('variantA')}
           >
@@ -50,6 +53,7 @@ export const MainCard: React.FC<MainCardProps> = ({
           </button>
           <button
             type="button"
+            disabled={disabled}
             className={`btn ${activeVariant === 'variantB' ? 'selected' : ''}`}
             onClick={() => onSelectVariant('variantB')}
           >
@@ -57,6 +61,7 @@ export const MainCard: React.FC<MainCardProps> = ({
           </button>
           <button
             type="button"
+            disabled={disabled}
             className={`btn ${activeVariant === 'variantC' ? 'selected' : ''}`}
             onClick={() => onSelectVariant('variantC')}
           >

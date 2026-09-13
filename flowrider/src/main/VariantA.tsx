@@ -6,12 +6,13 @@ import './Variant.css';
 
 interface VariantProps {
   data: string;
+  stageClass?: string;
 }
 
-export const VariantA: React.FC<VariantProps> = ({ data }) => {
+export const VariantA: React.FC<VariantProps> = ({ data, stageClass = '' }) => {
   return (
-    <div className="variant-panel">
-      <div className="flex flex-col gap-6">
+    <div className={`variant-panel ${stageClass}`}>
+      <div className="variant-anim-content flex flex-col gap-6">
         <Titulo heading="Este es el título" as="h1" size="text-3xl sm:text-4xl" />
 
         <div className="flex flex-col md:flex-row gap-6 items-start">
@@ -26,15 +27,8 @@ export const VariantA: React.FC<VariantProps> = ({ data }) => {
             <Parrafo>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet libero mi. Lorem
               ipsum dolor sit amet, consectetur adipiscing elit. Integer fermentum egestas volutpat.
-              Nunc pulvinar pretium ex nec consectetur. Suspendisse dolor augue, finibus eget elit
-              sit amet, porttitor sollicitudin risus. Curabitur euismod neque molestie, gravida
-              metus nec, luctus dolor. Suspendisse vestibulum velit purus, a consequat elit ornare
-              ac. Nulla sit amet diam elit. Aenean libero urna, scelerisque at elit eget, volutpat
-              blandit nulla. Mauris in erat nec nisi commodo lacinia.
             </Parrafo>
             <Parrafo>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet libero mi. Lorem
-              ipsum dolor sit amet, consectetur adipiscing elit. Integer fermentum egestas volutpat.
               Nunc pulvinar pretium ex nec consectetur. Suspendisse dolor augue, finibus eget elit
               sit amet, porttitor sollicitudin risus.
             </Parrafo>
