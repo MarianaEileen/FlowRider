@@ -20,6 +20,7 @@ export interface ComponentSpec {
 export interface LayoutResponse {
   layout: LayoutId;
   components: ComponentSpec[];
+  reply: string;
 }
 
 export interface LayoutRequest {

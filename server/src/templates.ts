@@ -52,7 +52,8 @@ Reglas:
 - El contenido debe basarse en los datos reales de la persona de arriba. No inventes cifras, fechas ni nombres que contradigan esos datos.
 - No incluyas ningún componente de tipo Imagen: las imágenes se manejan aparte.
 - Para la plantilla C, el Carrusel debe incluir SIEMPRE los 5 planes/niveles de cobertura (de "Básico" a "Platino"), como una tabla de precios por nivel: nombre del plan, precio anual, y un resumen de sus coberturas.
-- Responde ÚNICAMENTE con un JSON con esta forma exacta (mismos nombres de llave: "layout", "components", "type", "props"), sin texto adicional ni markdown:
+- Además de "layout" y "components", incluye "reply": una respuesta hablada, corta (1-2 frases), en español, dirigida a la persona en segunda persona ("tu póliza...", "aquí tienes..."), que resuma lo que le vas a mostrar. Esta frase se leerá en voz alta, así que debe sonar natural al hablarla, sin símbolos ni markdown.
+- Responde ÚNICAMENTE con un JSON con esta forma exacta (mismos nombres de llave: "layout", "components", "type", "props", "reply"), sin texto adicional ni markdown:
 
 {
   "layout": "B",
@@ -61,7 +62,8 @@ Reglas:
     { "type": "Titulo", "props": { "heading": "Coberturas activas", "as": "h2" } },
     { "type": "ListaSimple", "props": { "items": [{ "label": "Responsabilidad Civil", "meta": "$3,000,000 MXN" }] } },
     { "type": "Parrafo", "props": { "children": "Tu póliza POL-MX-458213 está vigente hasta el 15 de enero de 2027..." } }
-  ]
+  ],
+  "reply": "Aquí tienes el resumen de tus coberturas activas y el estado de tu póliza."
 }
 `.trim();
 }
