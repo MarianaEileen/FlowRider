@@ -1,1 +1,19 @@
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
 
+.main-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+
+  /* Background image configuration */
+  background-image:
+    url('./assets/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

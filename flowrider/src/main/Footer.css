@@ -3,17 +3,19 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 2rem;
-  background-color: #ffffff;
-  border-top: 1px solid #e5e7eb;
+  background-color: #dc2626;
+  border-top: 1px solid #b91c1c;
+  color: #ffffff;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .footer-logo a {
   font-size: 1.15rem;
-  font-weight: 700;
-  color: #111827;
+  font-weight: 800;
+  color: #ffffff;
   text-decoration: none;
   letter-spacing: -0.5px;
+  text-transform: uppercase;
 }
 
 .footer-links {
@@ -30,32 +32,27 @@
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #4b5563;
+  color: #fee2e2; /* soft light red/white */
   border-radius: 6px;
   transition: color 0.15s ease, background-color 0.15s ease;
 }
 
 /* Hover state */
 .footer-link:hover {
-  color: #1d4ed8;
-  background-color: #eff6ff;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.12);
 }
 
 /* Active / Selected state */
 .footer-link.active {
-  color: #ffffff;
-  background-color: #2563eb;
-}
-
-/* Active item hover */
-.footer-link.active:hover {
-  background-color: #1d4ed8;
-  color: #ffffff;
+  color: #dc2626;
+  background-color: #ffffff;
+  font-weight: 600;
 }
 
 .footer-copy {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: #fca5a5; /* muted red-white tone */
 }
 
 @media (max-width: 768px) {

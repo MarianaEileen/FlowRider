@@ -16,15 +16,16 @@ import { Navbar } from './main/Navbar';
 import { Footer } from './main/Footer';
 import { MainLayout } from './main/MainLayout';
 
-export default function App() {
-
+function App() {
   return (
-    <div>
+    <div className="app-shell">
       <Navbar />
-      <main>
+      <main className="main-content">
         <MainLayout />
       </main>
       <Footer />
     </div>
   );
 }
+
+export default App;
