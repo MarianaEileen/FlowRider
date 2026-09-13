@@ -18,49 +18,51 @@ export const MainCard: React.FC<MainCardProps> = ({
 }) => {
   return (
     <div className="card">
-      <header className="card-header">
-        <h2 className="card-title">Configuration Panel</h2>
-        <p className="card-subtitle">
-          Select a view mode and adjust your live input below.
-        </p>
-      </header>
+      <div className="card-inner">
+        <header className="card-header">
+          <h2 className="card-title">How can I help you?</h2>
+          <p className="card-subtitle">
+            From question to answer in one seamless current.
+          </p>
+        </header>
 
-      <div className="card-body">
-        <label htmlFor="card-input" className="input-label">
-          Shared Input Value
-        </label>
-        <input
-          id="card-input"
-          type="text"
-          className="text-input"
-          placeholder="Type something here..."
-          value={inputValue}
-          onChange={(e) => onInputChange(e.target.value)}
-        />
-      </div>
+        <div className="card-body">
+          <label htmlFor="card-input" className="input-label">
+            Shared Input Value
+          </label>
+          <input
+            id="card-input"
+            type="text"
+            className="text-input"
+            placeholder="Type something here..."
+            value={inputValue}
+            onChange={(e) => onInputChange(e.target.value)}
+          />
+        </div>
 
-      <div className="card-actions">
-        <button
-          type="button"
-          className={`btn btn-primary ${activeVariant === 'variantA' ? 'selected' : ''}`}
-          onClick={() => onSelectVariant('variantA')}
-        >
-          Summary View
-        </button>
-        <button
-          type="button"
-          className={`btn btn-secondary ${activeVariant === 'variantB' ? 'selected' : ''}`}
-          onClick={() => onSelectVariant('variantB')}
-        >
-          Analytics View
-        </button>
-        <button
-          type="button"
-          className={`btn btn-outline ${activeVariant === 'variantC' ? 'selected' : ''}`}
-          onClick={() => onSelectVariant('variantC')}
-        >
-          Settings View
-        </button>
+        <div className="card-actions">
+          <button
+            type="button"
+            className={`btn ${activeVariant === 'variantA' ? 'selected' : ''}`}
+            onClick={() => onSelectVariant('variantA')}
+          >
+            Summary View
+          </button>
+          <button
+            type="button"
+            className={`btn ${activeVariant === 'variantB' ? 'selected' : ''}`}
+            onClick={() => onSelectVariant('variantB')}
+          >
+            Analytics View
+          </button>
+          <button
+            type="button"
+            className={`btn ${activeVariant === 'variantC' ? 'selected' : ''}`}
+            onClick={() => onSelectVariant('variantC')}
+          >
+            Settings View
+          </button>
+        </div>
       </div>
     </div>
   );
