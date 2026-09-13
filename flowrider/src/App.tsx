@@ -12,9 +12,17 @@ import { Imagen } from './components/Imagen';
 import { ListaFiltro } from './components/ListaFiltro';
 import { ListaSimple } from './components/ListaSimple';
 
+import { Navbar } from './main/Navbar';
+import { Footer } from './main/Footer';
+import { MainCard } from './main/MainCard';
+
 export default function App() {
 
   return (
-
+    <Navbar />
+    <main>
+      <MainCard />
+    </main>
+    <Footer />
   );
 }
