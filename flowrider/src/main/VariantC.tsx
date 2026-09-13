@@ -2,6 +2,7 @@ import React from 'react';
 import { Titulo } from '../components/Titulo';
 import { Imagen } from '../components/Imagen';
 import { Carrusel } from '../components/Carrusel';
+import './Variant.css';
 
 interface VariantProps {
   data: string;
@@ -15,14 +16,14 @@ const carruselItems = [
 
 export const VariantC: React.FC<VariantProps> = ({ data }) => {
   return (
-    <div className="h-full overflow-y-auto flex flex-col items-center gap-6 p-2 text-center">
+    <div className="variant-panel variant-panel-center gap-6">
       <Titulo heading="Este es el título" as="h1" size="text-3xl sm:text-4xl" />
       <Titulo heading="Este es el subtítulo" as="h2" size="text-2xl" />
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full items-center">
         <Imagen width="w-full" aspect="aspect-[3/4]" />
 
-        <div className="aspect-[3/4] w-full rounded-lg border border-gray-200 bg-white flex items-center p-4">
+        <div className="aspect-[3/4] w-full rounded-lg border border-white/50 bg-white/40 backdrop-blur-sm flex items-center p-4">
           <Carrusel items={carruselItems} cardWidth="w-full" />
         </div>
 
@@ -30,7 +31,7 @@ export const VariantC: React.FC<VariantProps> = ({ data }) => {
       </div>
 
       {data.trim() && (
-        <p className="text-xs text-gray-400">Basado en tu entrada: “{data}”</p>
+        <p className="variant-caption">Basado en tu entrada: “{data}”</p>
       )}
     </div>
   );

@@ -20,7 +20,7 @@ export const Navbar: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <a href="#home">BrandLogo</a>
+        <a href="#home">FlowRider</a>
       </div>
 
       <ul className="navbar-links">

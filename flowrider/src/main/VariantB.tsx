@@ -2,6 +2,7 @@ import React from 'react';
 import { Titulo } from '../components/Titulo';
 import { Parrafo } from '../components/Parrafo';
 import { ListaSimple } from '../components/ListaSimple';
+import './Variant.css';
 
 interface VariantProps {
   data: string;
@@ -21,7 +22,7 @@ const items = [
 
 export const VariantB: React.FC<VariantProps> = ({ data }) => {
   return (
-    <div className="h-full overflow-y-auto flex flex-col items-center gap-6 p-2 text-center">
+    <div className="variant-panel variant-panel-center gap-6">
       <Titulo heading="Este es el título" as="h1" size="text-3xl sm:text-4xl" />
       <Titulo heading="Este es el subtítulo" as="h2" size="text-2xl" />
 
@@ -38,7 +39,7 @@ export const VariantB: React.FC<VariantProps> = ({ data }) => {
       </Parrafo>
 
       {data.trim() && (
-        <p className="text-xs text-gray-400">Basado en tu entrada: “{data}”</p>
+        <p className="variant-caption">Basado en tu entrada: “{data}”</p>
       )}
     </div>
   );

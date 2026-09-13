@@ -7,12 +7,12 @@ interface FooterLink {
   href: string;
 }
 
-const footerLinks: FooterLink[] = [
-  { id: 'privacy', label: 'Privacy Policy', href: '#privacy' },
-  { id: 'terms', label: 'Terms of Service', href: '#terms' },
-  { id: 'support', label: 'Support', href: '#support' },
-  { id: 'careers', label: 'Careers', href: '#careers' },
-];
+//const footerLinks: FooterLink[] = [
+  //{ id: 'privacy', label: 'Privacy Policy', href: '#privacy' },
+  //{ id: 'terms', label: 'Terms of Service', href: '#terms' },
+  //{ id: 'support', label: 'Support', href: '#support' },
+  //{ id: 'careers', label: 'Careers', href: '#careers' },
+//];
 
 export const Footer: React.FC = () => {
   const [activeId, setActiveId] = useState<string>('');
@@ -20,10 +20,10 @@ export const Footer: React.FC = () => {
   return (
     <footer className="footer">
       <div className="footer-logo">
-        <a href="#home">BrandLogo</a>
+        <a href="#home">FlowRider</a>
       </div>
 
-      <ul className="footer-links">
+      {/*<ul className="footer-links">
         {footerLinks.map((item) => (
           <li key={item.id}>
             <a
@@ -35,10 +35,10 @@ export const Footer: React.FC = () => {
             </a>
           </li>
         ))}
-      </ul>
+      </ul>*/}
 
       <div className="footer-copy">
-        &copy; {new Date().getFullYear()} BrandLogo. All rights reserved.
+        &copy; {new Date().getFullYear()} FlowRider. All rights reserved.
       </div>
     </footer>
   );

@@ -1,14 +1,13 @@
 import React from 'react';
+import './MainCard.css';
 
 export type VariantType = 'variantA' | 'variantB' | 'variantC';
 
 interface MainCardProps {
   inputValue: string;
   onInputChange: (val: string) => void;
-  activeVariant: VariantType;
+  activeVariant: VariantType | null;
   onSelectVariant: (variant: VariantType) => void;
-  onSubmit?: () => void;
-  isSubmitting?: boolean;
 }
 
 export const MainCard: React.FC<MainCardProps> = ({
@@ -16,8 +15,6 @@ export const MainCard: React.FC<MainCardProps> = ({
   onInputChange,
   activeVariant,
   onSelectVariant,
-  onSubmit,
-  isSubmitting,
 }) => {
   return (
     <div className="card">
@@ -38,11 +35,7 @@ export const MainCard: React.FC<MainCardProps> = ({
           className="text-input"
           placeholder="Type something here..."
           value={inputValue}
-          disabled={isSubmitting}
           onChange={(e) => onInputChange(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') onSubmit?.();
-          }}
         />
       </div>
 
