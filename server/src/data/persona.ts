@@ -64,19 +64,63 @@ export const PLANES = [
   {
     nombre: 'Básico',
     precioAnual: '$8,400 MXN',
-    descripcion: 'Responsabilidad civil hasta $3,000,000 MXN. Sin daños materiales ni asistencia vial.',
+    responsabilidadCivil: '$3,000,000 MXN',
+    danosMateriales: 'No incluido',
+    roboTotal: 'No incluido',
+    asistenciaVial: 'No incluida',
+    gastosMedicos: 'No incluido',
+    extras: 'Ninguno',
+    descripcion: 'Cobertura mínima: solo responsabilidad civil.',
+  },
+  {
+    nombre: 'Esencial',
+    precioAnual: '$11,200 MXN',
+    responsabilidadCivil: '$3,000,000 MXN',
+    danosMateriales: 'Deducible 10%',
+    roboTotal: 'No incluido',
+    asistenciaVial: 'No incluida',
+    gastosMedicos: '$100,000 MXN por persona',
+    extras: 'Ninguno',
+    descripcion: 'Agrega protección por daños al propio vehículo.',
   },
   {
     nombre: 'Amplia (plan actual)',
     precioAnual: '$14,850 MXN',
-    descripcion: 'Responsabilidad civil, daños materiales (deducible 5%), robo total (deducible 10%) y asistencia vial incluida.',
+    responsabilidadCivil: '$3,000,000 MXN',
+    danosMateriales: 'Deducible 5%',
+    roboTotal: 'Deducible 10%',
+    asistenciaVial: 'Incluida (grúa, cerrajería, batería)',
+    gastosMedicos: '$200,000 MXN por persona',
+    extras: 'Ninguno',
+    descripcion: 'Tu plan actual: cobertura amplia con asistencia vial incluida.',
   },
   {
     nombre: 'Amplia Plus',
     precioAnual: '$19,300 MXN',
-    descripcion: 'Todo lo de Amplia, más auto sustituto por 5 días, gastos médicos ampliados a $400,000 MXN y cristales sin deducible.',
+    responsabilidadCivil: '$3,000,000 MXN',
+    danosMateriales: 'Deducible 5%, cristales sin deducible',
+    roboTotal: 'Deducible 10%',
+    asistenciaVial: 'Incluida + auto sustituto 5 días',
+    gastosMedicos: '$400,000 MXN por persona',
+    extras: 'Auto sustituto 5 días, cristales sin deducible',
+    descripcion: 'Todo lo de Amplia, más auto sustituto y cristales sin deducible.',
+  },
+  {
+    nombre: 'Platino',
+    precioAnual: '$24,500 MXN',
+    responsabilidadCivil: '$5,000,000 MXN',
+    danosMateriales: 'Deducible 3%, cristales sin deducible, valor factura 2 años',
+    roboTotal: 'Deducible 5%',
+    asistenciaVial: 'Incluida + auto sustituto 15 días + asistencia legal',
+    gastosMedicos: '$600,000 MXN por persona',
+    extras: 'Valor factura 2 años, auto sustituto 15 días, asistencia legal',
+    descripcion: 'Cobertura máxima: valor factura, mayor RC y auto sustituto extendido.',
   },
 ];
+
+export function resumenPlan(p: (typeof PLANES)[number]): string {
+  return `${p.descripcion} RC: ${p.responsabilidadCivil}. Daños materiales: ${p.danosMateriales}. Robo total: ${p.roboTotal}. Asistencia vial: ${p.asistenciaVial}. Gastos médicos: ${p.gastosMedicos}.`;
+}
 
 export const HISTORIAL_PAGOS = [
   { mes: 'Ene', monto: 1237.5 },
@@ -95,7 +139,7 @@ export const SINIESTROS = [
 
 export function buildPersonaContext(): string {
   const coberturas = COBERTURAS.map((c) => `- ${c.nombre}: ${c.sumaAsegurada} (deducible: ${c.deducible})`).join('\n');
-  const planes = PLANES.map((p) => `- ${p.nombre} — ${p.precioAnual}/año: ${p.descripcion}`).join('\n');
+  const planes = PLANES.map((p) => `- ${p.nombre} — ${p.precioAnual}/año: ${resumenPlan(p)}`).join('\n');
   const pagos = HISTORIAL_PAGOS.map((p) => `${p.mes}: $${p.monto} MXN`).join(', ');
   const siniestros = SINIESTROS.map((s) => `- [${s.folio}] ${s.fecha} — ${s.tipo} (${s.estado}, costo: ${s.costo})`).join('\n');
 

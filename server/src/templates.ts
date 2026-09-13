@@ -16,7 +16,7 @@ export const TEMPLATES = [
   {
     id: 'C',
     name: 'Carrusel de opciones',
-    useCase: 'Comparar varias opciones entre sí (ej. planes de mejora).',
+    useCase: 'Comparar varias opciones entre sí (ej. los niveles de cobertura / planes de pago disponibles, del más básico al más completo).',
     slots: 'Titulo (as="h1"), Titulo (as="h2", subtítulo), Carrusel — en ese orden, exactamente 3 componentes.',
   },
 ] as const;
@@ -25,7 +25,7 @@ const COMPONENT_PROP_REFERENCE = `
 - Titulo: { heading: string, as: "h1" | "h2" }
 - Parrafo: { children: string } (children es el texto del párrafo, en prosa, sin viñetas)
 - ListaSimple: { items: { label: string, meta?: string }[] } (entre 3 y 6 items)
-- Carrusel: { items: { title: string, description: string }[] } (entre 2 y 4 items)
+- Carrusel: { items: { title: string, description: string }[] } (SIEMPRE los 5 planes/niveles de cobertura completos, del más básico al más completo — nunca menos de 5)
 `.trim();
 
 export function buildSystemPrompt(): string {
@@ -51,6 +51,7 @@ Reglas:
 - Devuelve EXACTAMENTE los componentes que esa plantilla requiere (ni más, ni menos, ni de otro tipo), en el orden indicado.
 - El contenido debe basarse en los datos reales de la persona de arriba. No inventes cifras, fechas ni nombres que contradigan esos datos.
 - No incluyas ningún componente de tipo Imagen: las imágenes se manejan aparte.
+- Para la plantilla C, el Carrusel debe incluir SIEMPRE los 5 planes/niveles de cobertura (de "Básico" a "Platino"), como una tabla de precios por nivel: nombre del plan, precio anual, y un resumen de sus coberturas.
 - Responde ÚNICAMENTE con un JSON con esta forma exacta (mismos nombres de llave: "layout", "components", "type", "props"), sin texto adicional ni markdown:
 
 {

@@ -1,4 +1,4 @@
-import { COBERTURAS, PERSONA, PLANES, POLIZA, SINIESTROS } from './data/persona.js';
+import { COBERTURAS, PERSONA, PLANES, POLIZA, SINIESTROS, resumenPlan } from './data/persona.js';
 import type { LayoutId, LayoutResponse } from './types.js';
 
 export const MOCK_RESPONSES: Record<LayoutId, LayoutResponse> = {
@@ -50,7 +50,7 @@ export const MOCK_RESPONSES: Record<LayoutId, LayoutResponse> = {
         props: {
           items: PLANES.map((p) => ({
             title: `${p.nombre} — ${p.precioAnual}/año`,
-            description: p.descripcion,
+            description: resumenPlan(p),
           })),
         },
       },
