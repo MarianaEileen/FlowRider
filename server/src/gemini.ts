@@ -2,13 +2,18 @@ import { GoogleGenAI } from '@google/genai';
 import { buildSystemPrompt } from './templates.js';
 import type { LayoutRequest, LayoutResponse } from './types.js';
 
-const apiKey = process.env.GEMINI_API_KEY;
-if (!apiKey) {
-  throw new Error('Falta GEMINI_API_KEY en el entorno (revisa server/.env).');
-}
-
-const ai = new GoogleGenAI({ apiKey });
 const model = process.env.GEMINI_MODEL ?? 'gemini-3.6-flash';
+let ai: GoogleGenAI | undefined;
+
+function getClient(): GoogleGenAI {
+  if (ai) return ai;
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error('Falta GEMINI_API_KEY en el entorno (revisa server/.env).');
+  }
+  ai = new GoogleGenAI({ apiKey });
+  return ai;
+}
 
 export async function generateLayout({ intent, item }: LayoutRequest): Promise<LayoutResponse> {
   const contents = [
@@ -18,7 +23,7 @@ export async function generateLayout({ intent, item }: LayoutRequest): Promise<L
     .filter(Boolean)
     .join('\n\n');
 
-  const response = await ai.models.generateContent({
+  const response = await getClient().models.generateContent({
     model,
     contents,
     config: {
