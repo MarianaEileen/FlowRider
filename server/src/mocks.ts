@@ -20,6 +20,7 @@ export const MOCK_RESPONSES: Record<LayoutId, LayoutResponse> = {
         },
       },
     ],
+    reply: 'Aquí tienes el resumen de tu contrato de seguro de auto.',
   },
   B: {
     layout: 'B',
@@ -39,6 +40,7 @@ export const MOCK_RESPONSES: Record<LayoutId, LayoutResponse> = {
         },
       },
     ],
+    reply: 'Aquí tienes tus coberturas activas y el estado de tu póliza.',
   },
   C: {
     layout: 'C',
@@ -55,6 +57,7 @@ export const MOCK_RESPONSES: Record<LayoutId, LayoutResponse> = {
         },
       },
     ],
+    reply: 'Aquí tienes los niveles de cobertura disponibles, de básico a platino.',
   },
 };
 

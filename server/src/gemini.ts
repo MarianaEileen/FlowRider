@@ -40,7 +40,8 @@ export async function generateLayout({ intent, item }: LayoutRequest): Promise<L
   const parsed = JSON.parse(text) as Partial<LayoutResponse>;
   if (
     (parsed.layout !== 'A' && parsed.layout !== 'B' && parsed.layout !== 'C') ||
-    !Array.isArray(parsed.components)
+    !Array.isArray(parsed.components) ||
+    typeof parsed.reply !== 'string'
   ) {
     throw new Error(`Forma de respuesta inesperada del modelo: ${text}`);
   }
